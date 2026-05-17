@@ -1,0 +1,24 @@
+[
+  {
+    "id": "PH-1779019216769-lzgt",
+    "timestamp": "2026-05-17T12:00:16.769Z",
+    "originalText": "Bugün 10-A sınıfında fizik dersinde Newton'un ikinci yasasını işledik. Mehmet, uzayda astronotlar neden havada süzülüyor diye sordu.",
+    "anonymizedText": "Bugün [SINIF] sınıfında fizik dersinde Newton'un ikinci yasasını işledik. [ÖĞRENCİ], uzayda astronotlar neden havada süzülüyor diye sordu.",
+    "subject": "Fizik",
+    "topic": "Newton Yasaları ve Yerçekimi",
+    "difficultQuestion": "Uzayda astronotlar neden havada süzülüyor? Yerçekimi yok mu?",
+    "questionType": "Kavramsal",
+    "misconception": "Uzay istasyonunda yerçekimi olmadığı düşüncesi. Gerçekte uzay istasyonundaki yerçekimi yeryüzünün yaklaşık %90'ı kadardır; ağırlıksızlık serbest düşüşten kaynaklanır.",
+    "teacherResponse": "Asansör örneği üzerinden serbest düşüş kavramını açıklama, mikro-yerçekimi ve orbital mekaniği sezgisel düzeyde anlatma.",
+    "teacherObservation": "Sınıfın yarısı kavramı anlayamadı. Simülasyon videosu ile desteklenmesi gerekiyor.",
+    "difficultyLevel": "Zor",
+    "recommendedMethod": "Simülasyon destekli öğretim, analoji kullanımı (asansör düşme senaryosu), PhET simülasyonları",
+    "privacyStatus": "Safe",
+    "privacyExplanation": "Öğrenci, sınıf veya konum gibi kişisel veriler saklanmadan önce başarıyla anonimleştirildi.",
+    "detectedSensitiveData": [
+      "10-A",
+      "Mehmet"
+    ],
+    "confidenceScore": 0.8905190759496415
+  }
+]
