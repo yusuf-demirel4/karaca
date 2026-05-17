@@ -1,4 +1,4 @@
-import type { ReflectionRecord } from "../src/types";
+import type { ReflectionRecord } from "../src/types.js";
 
 const records: ReflectionRecord[] = [];
 

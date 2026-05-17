@@ -1,5 +1,5 @@
-import type { ReflectionRecord } from "../../src/types";
-import { analyzePrivacy } from "./anonymizer";
+import type { ReflectionRecord } from "../../src/types.js";
+import { analyzePrivacy } from "./anonymizer.js";
 
 export const sampleReflections: string[] = [
   `Bugün 10-A sınıfında fizik dersinde Newton yasalarını anlattım. Mehmet birden 'Hocam, uzayda astronotlar süzülüyorsa yerçekimi yok demek değil mi?' diye sordu. Çoğu öğrencinin aklında bu yanılgı vardı, asansör metaforuyla serbest düşüşü anlattım. Ancak sınıfın yarısı hâlâ yerçekiminin sıfır olduğuna inanıyor, haftaya bir PhET simülasyonu açmam gerekecek.`,

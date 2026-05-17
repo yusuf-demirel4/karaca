@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import type { ReflectionRecord } from "../src/types";
-import { getRecords, addRecord, deleteRecord } from "./_store";
+import type { ReflectionRecord } from "../src/types.js";
+import { getRecords, addRecord, deleteRecord } from "./_store.js";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === "GET") {

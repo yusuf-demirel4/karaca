@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { GoogleGenAI } from "@google/genai";
-import { analyzeReflection } from "../server/lib/mockAI";
-import type { ReflectionRecord } from "../src/types";
+import { analyzeReflection } from "../server/lib/mockAI.js";
+import type { ReflectionRecord } from "../src/types.js";
 
 const apiKey = process.env.GEMINI_API_KEY;
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
@@ -84,23 +84,31 @@ Rules:
 - Keep all field values in Turkish.
     `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-        temperature: 0.2,
-      },
-    });
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+          temperature: 0.2,
+        },
+      });
 
-    const jsonStr = response.text;
-    if (!jsonStr) {
-      throw new Error("Empty response from LLM");
+      const jsonStr = response.text;
+      if (!jsonStr) {
+        throw new Error("Empty response from LLM");
+      }
+
+      const parsed = JSON.parse(jsonStr);
+      const normalized = normalizeResult(parsed, text);
+      res.status(200).json(normalized);
+      return;
+    } catch (llmError) {
+      console.error("LLM request failed, falling back to mock analysis:", llmError);
+      const mock = analyzeReflection(text);
+      res.status(200).json(mock);
+      return;
     }
-
-    const parsed = JSON.parse(jsonStr);
-    const normalized = normalizeResult(parsed, text);
-    res.status(200).json(normalized);
   } catch (error) {
     console.error("Analysis Error:", error);
     res.status(500).json({ error: "Failed to analyze reflection" });
