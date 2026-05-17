@@ -60,12 +60,12 @@ export default function AnonymizedTextView({ originalText, anonymizedText, detec
   return (
     <div>
       <button onClick={run} className="flex items-center gap-1.5 px-3 py-1.5 mb-3 rounded-lg text-xs font-medium text-apple-blue bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors">
-        <Play className="w-3 h-3" /> Anonimleştirmeyi canli goster
+        <Play className="w-3 h-3" /> Anonimleştirmeyi canlı göster
       </button>
 
       <div className="p-4 bg-apple-bg-secondary rounded-xl border border-apple-border-light">
         <p className="text-[10px] font-medium text-apple-text-tertiary uppercase tracking-wider mb-2">
-          {phase === "highlight" ? "Hassas veriler tespit ediliyor..." : phase === "replace" ? "Anonimleştiriliyor..." : "Anonimlestirilmis metin"}
+          {phase === "highlight" ? "Hassas veriler tespit ediliyor..." : phase === "replace" ? "Anonimleştiriliyor..." : "Anonimleştirilmiş metin"}
         </p>
         <p className="text-sm text-apple-text-secondary leading-relaxed whitespace-pre-wrap">
           {phase === "highlight" ? renderHighlighted() : renderAnonymized()}

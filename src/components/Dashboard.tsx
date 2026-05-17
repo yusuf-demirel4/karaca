@@ -22,28 +22,28 @@ export default function Dashboard({ records, onViewRecord, onDeleteRecord }: Pro
     return (
       <div className="text-center py-16">
         <Database className="w-10 h-10 text-apple-border mx-auto mb-3" />
-        <p className="text-lg font-semibold text-apple-text">Henuz kayit yok</p>
-        <p className="text-sm text-apple-text-tertiary mt-1">Bir yansima girerek baslayin.</p>
+        <p className="text-lg font-semibold text-apple-text">Henüz kayıt yok</p>
+        <p className="text-sm text-apple-text-tertiary mt-1">Bir yansıma girerek başlayın.</p>
       </div>
     );
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-apple-text text-center mb-2">Pedagojik Hafiza</h2>
-      <p className="text-sm text-apple-text-tertiary text-center mb-8">Tum analiz kayitlari ve istatistikler.</p>
+      <h2 className="text-2xl font-semibold text-apple-text text-center mb-2">Pedagojik Hafıza</h2>
+      <p className="text-sm text-apple-text-tertiary text-center mb-8">Tüm analiz kayıtları ve istatistikler.</p>
 
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3 mb-8">
         <Stat label="Toplam" value={records.length} />
         <Stat label="Ders" value={Object.keys(subjects).length} />
-        <Stat label="Ort. Guven" value={`%${avg}`} />
+        <Stat label="Ort. Güven" value={`%${avg}`} />
         <Stat label="Anonim" value={records.filter(r => r.privacyStatus === "Safe" || r.privacyStatus === "Anonimleştirildi" || r.privacyStatus === "Kişisel Veri Yok").length} />
       </div>
 
       {/* Subject bars */}
       <div className="bg-apple-bg-secondary rounded-2xl p-5 mb-8">
-        <p className="text-sm font-semibold text-apple-text mb-4">Ders Dagilimi</p>
+        <p className="text-sm font-semibold text-apple-text mb-4">Ders Dağılımı</p>
         <div className="space-y-2.5">
           {Object.entries(subjects).sort(([,a],[,b]) => b - a).map(([subj, count]) => (
             <div key={subj} className="flex items-center gap-3">
@@ -60,7 +60,7 @@ export default function Dashboard({ records, onViewRecord, onDeleteRecord }: Pro
       {/* Table */}
       <div className="rounded-2xl border border-apple-border-light overflow-hidden">
         <div className="px-5 py-4 bg-apple-bg-secondary flex items-center justify-between gap-4">
-          <p className="text-sm font-semibold text-apple-text">Kayitlar <span className="text-apple-text-tertiary font-normal">({filtered.length})</span></p>
+          <p className="text-sm font-semibold text-apple-text">Kayıtlar <span className="text-apple-text-tertiary font-normal">({filtered.length})</span></p>
           <div className="relative w-60">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-apple-text-tertiary" />
             <input
@@ -73,7 +73,7 @@ export default function Dashboard({ records, onViewRecord, onDeleteRecord }: Pro
         <table className="w-full">
           <thead>
             <tr className="border-b border-apple-border-light text-left">
-              <Th>Tarih</Th><Th>Ders</Th><Th>Konu</Th><Th>Zorluk</Th><Th>Guven</Th><Th>Durum</Th><Th></Th>
+              <Th>Tarih</Th><Th>Ders</Th><Th>Konu</Th><Th>Zorluk</Th><Th>Güven</Th><Th>Durum</Th><Th></Th>
             </tr>
           </thead>
           <tbody>

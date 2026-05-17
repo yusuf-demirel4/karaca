@@ -55,7 +55,7 @@ export default function AnalysisResult({ record, onSave, onNewReflection, isSave
         <div className="bg-apple-bg-secondary rounded-xl p-4">
           <div className="flex items-center gap-1.5 mb-2">
             <CheckCircle2 className="w-3.5 h-3.5 text-apple-blue" />
-            <span className="text-[11px] font-medium text-apple-text-tertiary uppercase tracking-wider">Guven</span>
+            <span className="text-[11px] font-medium text-apple-text-tertiary uppercase tracking-wider">Güven</span>
           </div>
           <p className="text-lg font-semibold text-apple-text">%{pct}</p>
           <div className="mt-1.5 h-1 bg-apple-border-light rounded-full"><div className="h-full bg-apple-blue rounded-full" style={{ width: `${pct}%` }} /></div>
@@ -68,22 +68,22 @@ export default function AnalysisResult({ record, onSave, onNewReflection, isSave
       </Section>
 
       {/* Misconception */}
-      <Section icon={<AlertTriangle className="w-4 h-4 text-amber-500" />} title="Kavram Yanilgisi">
+      <Section icon={<AlertTriangle className="w-4 h-4 text-amber-500" />} title="Kavram Yanılgısı">
         <p className="text-sm text-apple-text-secondary leading-relaxed">{record.misconception}</p>
       </Section>
 
       {/* Teacher response + observation */}
       <div className="grid grid-cols-2 gap-3 mb-4">
-        <Section icon={<MessageSquare className="w-4 h-4 text-apple-blue" />} title="Ogretmen Yaniti" compact>
+        <Section icon={<MessageSquare className="w-4 h-4 text-apple-blue" />} title="Öğretmen Yanıtı" compact>
           <p className="text-sm text-apple-text-secondary leading-relaxed">{record.teacherResponse}</p>
         </Section>
-        <Section icon={<Eye className="w-4 h-4 text-apple-blue" />} title="Gozlem" compact>
+        <Section icon={<Eye className="w-4 h-4 text-apple-blue" />} title="Gözlem" compact>
           <p className="text-sm text-apple-text-secondary leading-relaxed">{record.teacherObservation}</p>
         </Section>
       </div>
 
       {/* Recommendation */}
-      <Section icon={<Lightbulb className="w-4 h-4 text-apple-blue" />} title="Sonraki Ders Icin Oneri" highlight>
+      <Section icon={<Lightbulb className="w-4 h-4 text-apple-blue" />} title="Sonraki Ders İçin Öneri" highlight>
         <p className="text-sm text-apple-text leading-relaxed">{record.recommendedMethod}</p>
       </Section>
 
@@ -107,7 +107,7 @@ export default function AnalysisResult({ record, onSave, onNewReflection, isSave
 
         <button onClick={() => setShowPrivacy(!showPrivacy)} className="flex items-center gap-1 mt-3 text-xs text-apple-link font-medium">
           {showPrivacy ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-          {showPrivacy ? "Gizle" : "Anonimlestirilmis metni goster"}
+          {showPrivacy ? "Gizle" : "Anonimleştirilmiş metni göster"}
         </button>
 
         {showPrivacy && (
@@ -145,5 +145,5 @@ function DiffBadge({ level }: { level: string }) {
 
 function PrivBadge({ status }: { status: string }) {
   const ok = status === "Safe" || status === "Anonimleştirildi" || status === "Kişisel Veri Yok";
-  return <span className={`px-2.5 py-1 text-xs font-medium rounded-md border ${ok ? "bg-green-50 text-green-600 border-green-200" : "bg-orange-50 text-orange-600 border-orange-200"}`}>{ok ? "Guvende" : status}</span>;
+  return <span className={`px-2.5 py-1 text-xs font-medium rounded-md border ${ok ? "bg-green-50 text-green-600 border-green-200" : "bg-orange-50 text-orange-600 border-orange-200"}`}>{ok ? "Güvende" : status}</span>;
 }

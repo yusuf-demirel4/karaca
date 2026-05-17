@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Send, Zap } from "lucide-react";
 
-const DEMO_SCENARIO = `Bugün fizik dersinde bir ogrenci "Mutlak sifirda zaman durur mu?" diye sordu. Bazi ogrenciler sicaklik ve enerji farkini karistirdi. Sicakligin parcacik hareketi oldugunu, zamanin farkli bir fiziksel buyukluk oldugunu anlattim. Ancak sinifin cogu hala "her sey donarsa zaman da donar" diye dusunuyor.`;
+const DEMO_SCENARIO = `Bugün fizik dersinde bir öğrenci "Mutlak sıfırda zaman durur mu?" diye sordu. Bazı öğrenciler sıcaklık ve enerji farkını karıştırdı. Sıcaklığın parçacık hareketi olduğunu, zamanın farklı bir fiziksel büyüklük olduğunu anlattım. Ancak sınıfın çoğu hala "her şey donarsa zaman da donar" diye düşünüyor.`;
 
 const samples = [
-  { label: "Fizik", text: "Bugün 10-A sinifinda fizik dersinde Newton'un ikinci yasasini isledik. Mehmet, uzayda astronotlar neden havada suzuluyor diye sordu. Asansor ornegiyle serbest dusus kavramini anlattim ama sinifin yarisi hala yercekiminin sifir olduguna inaniyor." },
-  { label: "Matematik", text: "Matematik dersinde limit kavramina giris yaptik. Ayse israrla sifira bolduğumuzde neden tanimsiz diyoruz sonsuz olmasi gerekmez mi diye sordu. Sonsuzun bir sayi degil yonelim oldugunu grafikler cizerek gosterdim." },
-  { label: "Biyoloji", text: "Biyoloji dersinde hucre bolunmesini anlatirken Elif cok guzel bir soru sordu: Madem hucreler yaslanip oluyor kanser hucreleri nasil olumsuz oluyor? Apoptozis mekanizmasini basit dille anlattim." },
-  { label: "Tarih", text: "Tarih dersinde Kurtulus Savasi'nin orgutlenme donemini islerken Ali, Mustafa Kemal padisahin emrine karsi geldiginde isyan etmis olmuyor mu dedi. Tarihsel olaylari o gunun kosullariyla degerlendirmemiz gerektigini kaynaklar okutarak anlattim." },
-  { label: "Edebiyat", text: "Edebiyat dersinde Divan siirini islerken Zeynep, bu sairler halktan bu kadar kopuksa neden edebiyatimizda bu kadar onemliler diye itiraz etti. Estetik degerin tarihsel mirasimizin parcasi oldugunu Fuzuli ornekleriyle anlattim." },
-  { label: "Kimya", text: "Kimya dersinde mol kavramina giris yaptim. Burak, 6.02 carpi 10 uzeri 23 sayisi tamamen uydurma bir sayi mi neden duz bir sayi degil diye sordu. Karbon-12 izotopu uzerinden Avogadro sayisinin nasil hesaplandığını anlattim." },
+  { label: "Fizik", text: "Bugün 10-A sınıfında fizik dersinde Newton'un ikinci yasasını işledik. Mehmet, uzayda astronotlar neden havada süzülüyor diye sordu. Asansör örneğiyle serbest düşüş kavramını anlattım ama sınıfın yarısı hala yerçekiminin sıfır olduğuna inanıyor." },
+  { label: "Matematik", text: "Matematik dersinde limit kavramına giriş yaptık. Ayşe ısrarla sıfıra böldüğümüzde neden tanımsız diyoruz, sonsuz olması gerekmez mi diye sordu. Sonsuzun bir sayı değil yönelim olduğunu grafikler çizerek gösterdim." },
+  { label: "Biyoloji", text: "Biyoloji dersinde hücre bölünmesini anlatırken Elif çok güzel bir soru sordu: Madem hücreler yaşlanıp ölüyorsa, kanser hücreleri nasıl ölümsüz oluyor? Apoptozis mekanizmasını basit dille anlattım." },
+  { label: "Tarih", text: "Tarih dersinde Kurtuluş Savaşı'nın örgütlenme dönemini işlerken Ali, Mustafa Kemal padişahın emrine karşı geldiğinde isyan etmiş olmuyor mu dedi. Tarihsel olayları o günün koşullarıyla değerlendirmemiz gerektiğini kaynaklar okutarak anlattım." },
+  { label: "Edebiyat", text: "Edebiyat dersinde Divan şiirini işlerken Zeynep, bu şairler halktan bu kadar kopuksa neden edebiyatımızda bu kadar önemliler diye itiraz etti. Estetik değerin tarihsel mirasımızın parçası olduğunu Fuzuli örnekleriyle anlattım." },
+  { label: "Kimya", text: "Kimya dersinde mol kavramına giriş yaptım. Burak, 6.02 çarpı 10 üzeri 23 sayısı tamamen uydurma bir sayı mı, neden düz bir sayı değil diye sordu. Karbon-12 izotopu üzerinden Avogadro sayısının nasıl hesaplandığını anlattım." },
 ];
 
 interface Props {
@@ -28,8 +28,8 @@ export default function ReflectionInput({ onSubmit, isAnalyzing }: Props) {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold text-apple-text mb-1">Ders Yansimasi</h2>
-      <p className="text-sm text-apple-text-tertiary mb-5">Ders sonrasi gozlemlerinizi yazin.</p>
+      <h2 className="text-2xl font-semibold text-apple-text mb-1">Ders Yansıması</h2>
+      <p className="text-sm text-apple-text-tertiary mb-5">Ders sonrası gözlemlerinizi yazın.</p>
 
       {/* Demo button */}
       <button
@@ -42,7 +42,7 @@ export default function ReflectionInput({ onSubmit, isAnalyzing }: Props) {
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-apple-text">Sunum Demo Senaryosu</p>
-          <p className="text-xs text-apple-text-tertiary truncate">"Mutlak sifirda zaman durur mu?"</p>
+          <p className="text-xs text-apple-text-tertiary truncate">"Mutlak sıfırda zaman durur mu?"</p>
         </div>
       </button>
 
@@ -50,7 +50,7 @@ export default function ReflectionInput({ onSubmit, isAnalyzing }: Props) {
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Bugün derste ne oldu? Ogrenciler hangi sorularla zorlandi?"
+        placeholder="Bugün derste ne oldu? Öğrenciler hangi sorularla zorlandı?"
         className="w-full h-32 p-4 mb-2 rounded-xl bg-apple-bg-secondary border border-apple-border-light text-sm text-apple-text leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-apple-blue/30 focus:border-apple-blue placeholder:text-apple-text-tertiary transition-all"
         disabled={isAnalyzing}
       />

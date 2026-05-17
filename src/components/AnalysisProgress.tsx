@@ -1,10 +1,10 @@
 import { FileText, Shield, Brain, Lightbulb, Check } from "lucide-react";
 
 const steps = [
-  { icon: FileText, label: "Not alindi" },
+  { icon: FileText, label: "Not alındı" },
   { icon: Shield, label: "Anonimleştirme" },
   { icon: Brain, label: "YZ analizi" },
-  { icon: Lightbulb, label: "Oneri uretimi" },
+  { icon: Lightbulb, label: "Öneri üretimi" },
 ];
 
 export default function AnalysisProgress({ step }: { step: number }) {

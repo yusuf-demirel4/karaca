@@ -49,7 +49,7 @@ export default function App() {
         setAnalysisStep(0);
       }, 500);
     } catch {
-      alert("Analiz basarisiz oldu. Backend calistigini kontrol edin.");
+      alert("Analiz başarısız oldu. Backend'in çalıştığını kontrol edin.");
       setIsAnalyzing(false);
       setAnalysisStep(0);
     }
@@ -119,7 +119,7 @@ export default function App() {
                     </svg>
                   </div>
                   <p className="text-lg font-semibold text-apple-text mb-1">Analiz Bekleniyor</p>
-                  <p className="text-sm text-apple-text-tertiary max-w-xs">Sol panelden bir yansima girin veya ornek secin.</p>
+                  <p className="text-sm text-apple-text-tertiary max-w-xs">Sol panelden bir yansıma girin veya örnek seçin.</p>
                 </div>
               )}
             </div>
@@ -137,7 +137,7 @@ export default function App() {
       {/* Footer */}
       <footer className="border-t border-apple-border-light py-6">
         <div className="max-w-[980px] mx-auto px-6 flex items-center justify-between text-xs text-apple-text-tertiary">
-          <span>Maarif Hafiza v1.0 — Java Takimi</span>
+          <span>Maarif Hafıza v1.0 — Java Takımı</span>
           <div className="flex gap-3">
             <span>KVKK Uyumlu</span>
             <span>SKA 4</span>
