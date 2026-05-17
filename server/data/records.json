@@ -1,5 +1,48 @@
 [
   {
+    "id": "PH-1779024435259-yiv7",
+    "timestamp": "2026-05-17T13:27:15.259Z",
+    "originalText": "Tarih dersinde Kurtulus Savasi'nin orgutlenme donemini islerken Ali, Mustafa Kemal padisahin emrine karsi geldiginde isyan etmis olmuyor mu dedi. Tarihsel olaylari o gunun kosullariyla degerlendirmemiz gerektigini kaynaklar okutarak anlattim.",
+    "anonymizedText": "Tarih dersinde Kurtulus Savasi'nin orgutlenme donemini islerken [ÖĞRENCİ], Mustafa Kemal padisahin emrine karsi geldiginde isyan etmis olmuyor mu dedi. Tarihsel olaylari o gunun kosullariyla degerlendirmemiz gerektigini kaynaklar okutarak anlattim.",
+    "subject": "Tarih",
+    "topic": "Kurtuluş Savaşı ve Millî Egemenlik",
+    "difficultQuestion": "Mustafa Kemal neden padişaha karşı geldi? Bu vatan hainliği sayılmaz mı?",
+    "questionType": "Eleştirel Düşünme",
+    "misconception": "Tarihsel olayları günümüz değer yargılarıyla yargılama, dönemin siyasi bağlamını göz ardı etme.",
+    "teacherResponse": "Kronolojik anlatım, birincil kaynaklardan alıntılar, dönemin koşullarının analizi, eleştirel düşünme tartışması.",
+    "teacherObservation": "Hassas konularda dikkatli ve çok perspektifli yaklaşım gerekiyor. Tartışma ortamı verimli oldu.",
+    "difficultyLevel": "Zor",
+    "recommendedMethod": "Birincil kaynak analizi, tartışma yöntemi, kronolojik çizelge kullanımı, empati haritası",
+    "privacyStatus": "Safe",
+    "privacyExplanation": "Öğrenci, sınıf veya konum gibi kişisel veriler saklanmadan önce başarıyla anonimleştirildi.",
+    "detectedSensitiveData": [
+      "Ali"
+    ],
+    "confidenceScore": 0.8337128720171884
+  },
+  {
+    "id": "PH-1779024404456-5aw9",
+    "timestamp": "2026-05-17T13:26:44.456Z",
+    "originalText": "Bugün 10-A sinifinda fizik dersinde Newton'un ikinci yasasini isledik. Mehmet, uzayda astronotlar neden havada suzuluyor diye sordu. Asansor ornegiyle serbest dusus kavramini anlattim ama sinifin yarisi hala yercekiminin sifir olduguna inaniyor.",
+    "anonymizedText": "Bugün [SINIF] sinifinda fizik dersinde Newton'un ikinci yasasini isledik. [ÖĞRENCİ], uzayda astronotlar neden havada suzuluyor diye sordu. Asansor ornegiyle serbest dusus kavramini anlattim ama sinifin yarisi hala yercekiminin sifir olduguna inaniyor.",
+    "subject": "Fizik",
+    "topic": "Newton Yasaları ve Yerçekimi",
+    "difficultQuestion": "Uzayda astronotlar neden havada süzülüyor? Yerçekimi yok mu?",
+    "questionType": "Kavramsal",
+    "misconception": "Uzay istasyonunda yerçekimi olmadığı düşüncesi. Gerçekte uzay istasyonundaki yerçekimi yeryüzünün yaklaşık %90'ı kadardır; ağırlıksızlık serbest düşüşten kaynaklanır.",
+    "teacherResponse": "Asansör örneği üzerinden serbest düşüş kavramını açıklama, mikro-yerçekimi ve orbital mekaniği sezgisel düzeyde anlatma.",
+    "teacherObservation": "Sınıfın yarısı kavramı anlayamadı. Simülasyon videosu ile desteklenmesi gerekiyor.",
+    "difficultyLevel": "Zor",
+    "recommendedMethod": "Simülasyon destekli öğretim, analoji kullanımı (asansör düşme senaryosu), PhET simülasyonları",
+    "privacyStatus": "Safe",
+    "privacyExplanation": "Öğrenci, sınıf veya konum gibi kişisel veriler saklanmadan önce başarıyla anonimleştirildi.",
+    "detectedSensitiveData": [
+      "10-A",
+      "Mehmet"
+    ],
+    "confidenceScore": 0.8831415951239494
+  },
+  {
     "id": "demo-matematik-002",
     "timestamp": "2026-05-14T11:00:00.000Z",
     "originalText": "11-B ile türev öncesi limit kavramına giriş yaptık. Ayşe ısrarla 'Sıfıra böldüğümüzde neden tanımsız diyoruz, sonsuz olması gerekmez mi?' diye sordu.",
