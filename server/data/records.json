@@ -1,5 +1,25 @@
 [
   {
+    "subject": "Tarih",
+    "topic": "Kurtuluş Savaşı'nın örgütlenme dönemi",
+    "difficultQuestion": "Mustafa Kemal'in padişahın emrine karşı gelmesinin isyan olup olmadığı",
+    "questionType": "Kavramsal/Yorumsal",
+    "misconception": "Tarihsel olayları kendi dönemi koşullarından bağımsız değerlendirme eğilimi",
+    "teacherResponse": "Tarihsel olayların kendi dönemi koşullarıyla değerlendirilmesi gerektiğini kaynaklar okutarak açıklama.",
+    "teacherObservation": "Öğrencinin tarihsel olaylara eleştirel bir bakış açısıyla yaklaşması ve bağlamsal düşünme ihtiyacı.",
+    "difficultyLevel": "Orta",
+    "recommendedTeachingMethod": "Kaynak temelli öğretim, bağlamsal analiz",
+    "privacyStatus": "Needs Review",
+    "anonymizedText": "Tarih dersinde Kurtuluş Savaşı'nın örgütlenme dönemini işlerken bir öğrenci, Mustafa Kemal padişahın emrine karşı geldiğinde isyan etmiş olmuyor mu dedi. Tarihsel olayları o günün koşullarıyla değerlendirmemiz gerektiğini kaynaklar okutarak anlattım.",
+    "detectedSensitiveData": [
+      "Ali"
+    ],
+    "confidenceScore": 0.95,
+    "id": "mp9uj373fdczq6ldcou",
+    "timestamp": "2026-05-17T14:04:03.183Z",
+    "originalText": "Tarih dersinde Kurtuluş Savaşı'nın örgütlenme dönemini işlerken Ali, Mustafa Kemal padişahın emrine karşı geldiğinde isyan etmiş olmuyor mu dedi. Tarihsel olayları o günün koşullarıyla değerlendirmemiz gerektiğini kaynaklar okutarak anlattım."
+  },
+  {
     "subject": "Fizik",
     "topic": "Mutlak Sıfır, Zaman ve Sıcaklık-Enerji İlişkisi",
     "difficultQuestion": "Mutlak sıfırda zaman durur mu?",

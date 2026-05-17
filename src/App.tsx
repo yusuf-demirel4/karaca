@@ -10,6 +10,7 @@ import Dashboard from "./components/Dashboard";
 import KvkkPage from "./pages/KvkkPage";
 
 export default function App() {
+  const apiBase = import.meta.env.VITE_API_BASE_URL ?? "";
   const [records, setRecords] = useState<ReflectionRecord[]>([]);
   const [currentAnalysis, setCurrentAnalysis] = useState<ReflectionRecord | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -18,11 +19,11 @@ export default function App() {
   const workspaceRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/records")
+    fetch(`${apiBase}/api/records`)
       .then(r => r.json())
       .then(setRecords)
       .catch(() => {});
-  }, []);
+  }, [apiBase]);
 
   const scrollToWorkspace = () => {
     workspaceRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -37,7 +38,7 @@ export default function App() {
     const t2 = setTimeout(() => setAnalysisStep(3), 1500);
 
     try {
-      const res = await fetch("http://localhost:3000/api/analyze-reflection", {
+      const res = await fetch(`${apiBase}/api/analyze-reflection`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
@@ -62,7 +63,7 @@ export default function App() {
   const handleSave = useCallback(async () => {
     if (!currentAnalysis || isSaved) return;
     try {
-      await fetch("http://localhost:3000/api/records", {
+      await fetch(`${apiBase}/api/records`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ record: currentAnalysis }),
@@ -80,7 +81,7 @@ export default function App() {
 
   const handleDeleteRecord = useCallback(async (id: string) => {
     try {
-      await fetch(`http://localhost:3000/api/records/${id}`, { method: "DELETE" });
+      await fetch(`${apiBase}/api/records/${id}`, { method: "DELETE" });
       setRecords(prev => prev.filter(r => r.id !== id));
       if (currentAnalysis?.id === id) setCurrentAnalysis(null);
     } catch {}
