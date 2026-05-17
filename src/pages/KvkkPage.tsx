@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ShieldCheck, UserX, FileCheck2, Eye, Target, Layers, ArrowLeft, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -88,10 +89,10 @@ function Card({
   tone,
   children,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   tone: "green" | "blue" | "purple" | "amber" | "rose" | "slate";
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const toneMap: Record<typeof tone, string> = {
     green: "bg-green-50 text-green-700",
@@ -115,7 +116,7 @@ function Card({
   );
 }
 
-function InfoCard({ children }: { children: React.ReactNode }) {
+function InfoCard({ children }: { children: ReactNode }) {
   return (
     <div className="rounded-xl bg-white border border-apple-border-light p-4 text-xs text-apple-text-tertiary">
       {children}
