@@ -17,8 +17,8 @@ export default function AnalysisResult({ record, onSave, onNewReflection, isSave
   return (
     <div className="p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold text-apple-text">Analiz Sonucu</h2>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+        <h2 className="text-xl sm:text-2xl font-semibold text-apple-text">Analiz Sonucu</h2>
         <div className="flex gap-2">
           <button onClick={onNewReflection} className="px-4 py-2 text-sm text-apple-text-secondary rounded-full border border-apple-border hover:bg-apple-bg-secondary transition-colors">
             Yeni
@@ -36,7 +36,7 @@ export default function AnalysisResult({ record, onSave, onNewReflection, isSave
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
         <div className="bg-apple-bg-secondary rounded-xl p-4">
           <div className="flex items-center gap-1.5 mb-2">
             <BookOpen className="w-3.5 h-3.5 text-apple-blue" />
@@ -73,7 +73,7 @@ export default function AnalysisResult({ record, onSave, onNewReflection, isSave
       </Section>
 
       {/* Teacher response + observation */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <Section icon={<MessageSquare className="w-4 h-4 text-apple-blue" />} title="Öğretmen Yanıtı" compact>
           <p className="text-sm text-apple-text-secondary leading-relaxed">{record.teacherResponse}</p>
         </Section>

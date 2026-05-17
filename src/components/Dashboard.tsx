@@ -34,7 +34,7 @@ export default function Dashboard({ records, onViewRecord, onDeleteRecord }: Pro
       <p className="text-sm text-apple-text-tertiary text-center mb-8">Tüm analiz kayıtları ve istatistikler.</p>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-3 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
         <Stat label="Toplam" value={records.length} />
         <Stat label="Ders" value={Object.keys(subjects).length} />
         <Stat label="Ort. Güven" value={`%${avg}`} />
@@ -59,9 +59,9 @@ export default function Dashboard({ records, onViewRecord, onDeleteRecord }: Pro
 
       {/* Table */}
       <div className="rounded-2xl border border-apple-border-light overflow-hidden">
-        <div className="px-5 py-4 bg-apple-bg-secondary flex items-center justify-between gap-4">
+        <div className="px-4 sm:px-5 py-4 bg-apple-bg-secondary flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
           <p className="text-sm font-semibold text-apple-text">Kayıtlar <span className="text-apple-text-tertiary font-normal">({filtered.length})</span></p>
-          <div className="relative w-60">
+          <div className="relative w-full sm:w-60">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-apple-text-tertiary" />
             <input
               value={query} onChange={e => setQuery(e.target.value)}
@@ -70,7 +70,8 @@ export default function Dashboard({ records, onViewRecord, onDeleteRecord }: Pro
             />
           </div>
         </div>
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px]">
           <thead>
             <tr className="border-b border-apple-border-light text-left">
               <Th>Tarih</Th><Th>Ders</Th><Th>Konu</Th><Th>Zorluk</Th><Th>Güven</Th><Th>Durum</Th><Th></Th>
@@ -95,6 +96,7 @@ export default function Dashboard({ records, onViewRecord, onDeleteRecord }: Pro
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );
