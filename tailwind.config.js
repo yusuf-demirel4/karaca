@@ -52,9 +52,14 @@ export default {
       },
       fontFamily: {
         sans: ['var(--font-sans)'],
+      },
+      animation: {
+        'shimmer': 'shimmer 3s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'glow-pulse': 'glow-pulse 4s ease-in-out infinite',
+        'gradient': 'gradient-shift 8s ease infinite',
       }
     },
   },
   plugins: [],
 }
-

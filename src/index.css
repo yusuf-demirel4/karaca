@@ -4,16 +4,16 @@
 
 @layer base {
   :root {
-    --color-primary-50: #eff6ff;
-    --color-primary-100: #dbeafe;
-    --color-primary-200: #bfdbfe;
-    --color-primary-300: #93c5fd;
-    --color-primary-400: #60a5fa;
-    --color-primary-500: #3b82f6;
-    --color-primary-600: #2563eb;
-    --color-primary-700: #1d4ed8;
-    --color-primary-800: #1e40af;
-    --color-primary-900: #1e3a8a;
+    --color-primary-50: #eef7ff;
+    --color-primary-100: #d9edff;
+    --color-primary-200: #bce0ff;
+    --color-primary-300: #8eccff;
+    --color-primary-400: #59aeff;
+    --color-primary-500: #3b8bff;
+    --color-primary-600: #1d6af5;
+    --color-primary-700: #1555e1;
+    --color-primary-800: #1845b6;
+    --color-primary-900: #1a3d8f;
 
     --color-accent-50: #f0fdf4;
     --color-accent-100: #dcfce7;
@@ -23,10 +23,10 @@
     --color-accent-600: #16a34a;
     --color-accent-700: #15803d;
 
-    --color-surface-50: #f8fafc;
-    --color-surface-100: #f1f5f9;
-    --color-surface-200: #e2e8f0;
-    --color-surface-300: #cbd5e1;
+    --color-surface-50: #fafbfc;
+    --color-surface-100: #f4f6f8;
+    --color-surface-200: #e8ecf0;
+    --color-surface-300: #d1d9e0;
     --color-surface-400: #94a3b8;
     --color-surface-500: #64748b;
     --color-surface-600: #475569;
@@ -53,10 +53,93 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-surface-50);
+  background-color: #fafbfc;
   color: var(--color-surface-900);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apple-style light beam animations */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Glass morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Light beam effect */
+.light-beam {
+  position: relative;
+  overflow: hidden;
+}
+
+.light-beam::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(59, 139, 255, 0.08) 0%, transparent 70%);
+  animation: glow-pulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Orb background effects */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 ::-webkit-scrollbar {

@@ -1,7 +1,7 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { ReflectionRecord } from "./types";
-import { useEffect } from "react";
 import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
 import ReflectionInput from "./components/ReflectionInput";
 import AnalysisResult from "./components/AnalysisResult";
 import Dashboard from "./components/Dashboard";
@@ -11,6 +11,7 @@ export default function App() {
   const [currentAnalysis, setCurrentAnalysis] = useState<ReflectionRecord | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [showWorkspace, setShowWorkspace] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/records")
@@ -32,7 +33,7 @@ export default function App() {
       setIsSaved(false);
     } catch (error) {
       console.error("Analysis failed:", error);
-      alert("Analiz başarısız oldu.");
+      alert("Analiz basarisiz oldu.");
     } finally {
       setIsAnalyzing(false);
     }
@@ -54,16 +55,20 @@ export default function App() {
     }
   }, [currentAnalysis, isSaved]);
 
-  const handleLoadSampleData = useCallback(async () => {
-    // For testing purposes since sampleReflections is removed from App.tsx, we rely on the ReflectionInput buttons
-    alert("Lütfen demo verisini yüklemek için sol paneldeki yansıma butonlarını kullanın.");
+  const handleStartDemo = useCallback(() => {
+    setShowWorkspace(true);
+    setTimeout(() => {
+      document.getElementById("workspace")?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   }, []);
 
   const handleViewRecord = useCallback((record: ReflectionRecord) => {
     setCurrentAnalysis(record);
     setIsSaved(true);
-    // Scroll to top to see analysis
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setShowWorkspace(true);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 100);
   }, []);
 
   const handleDeleteRecord = useCallback(async (id: string) => {
@@ -77,97 +82,101 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#fbfbfd]">
-      <Header recordCount={records.length} />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        
+    <div className="min-h-screen bg-surface-50 relative overflow-hidden">
+      {/* Background orbs for Apple-style ambient lighting */}
+      <div className="orb w-[600px] h-[600px] bg-primary-300 top-[-200px] right-[-100px] fixed" />
+      <div className="orb w-[500px] h-[500px] bg-accent-300 bottom-[-200px] left-[-100px] fixed" />
+      <div className="orb w-[400px] h-[400px] bg-primary-200 top-[50%] left-[50%] fixed" />
+
+      <div className="relative z-10">
+        <Header recordCount={records.length} />
+
         {/* Hero Section */}
-        <div className="mb-16 text-center">
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-surface-900">
-            Öğretmen Paneli
-          </h2>
-          <p className="mt-4 text-xl text-surface-500 max-w-2xl mx-auto font-light tracking-wide">
-            Ders sonrası yansımalarınızı anonimleştirerek kurumsal bir pedagojik hafızaya dönüştürün.
-          </p>
-          <div className="mt-6 flex justify-center items-center gap-2 text-xs font-medium tracking-wide text-surface-400">
-            Sistem öğrencileri izlemez veya ses kaydı tutmaz. Yalnızca öğretmen yansımaları işlenir.
-          </div>
-        </div>
+        <HeroSection onStartDemo={handleStartDemo} recordCount={records.length} />
 
-        {/* Main Workspace (Split Pane) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 items-start">
-          
-          {/* Left Column: Input */}
-          <div className="bg-white rounded-2xl shadow-sm border border-surface-200 overflow-hidden sticky top-24">
-            <ReflectionInput
-              onSubmit={handleSubmit}
-              isAnalyzing={isAnalyzing}
-            />
-            <div className="px-6 pb-6 pt-2">
-              <button 
-                onClick={handleLoadSampleData}
-                className="w-full text-sm text-surface-500 hover:text-primary-600 transition-colors font-medium text-center"
-              >
-                + Demo Verilerini Yükle
-              </button>
+        {/* Workspace */}
+        {showWorkspace && (
+          <main id="workspace" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            {/* Section Title */}
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-surface-900">
+                Ogretmen Paneli
+              </h2>
+              <p className="mt-3 text-lg text-surface-500 max-w-2xl mx-auto font-light">
+                Ders sonrasi yansimalarinizi anonimleştirerek kurumsal bir pedagojik hafizaya donusturun.
+              </p>
             </div>
-          </div>
 
-          {/* Right Column: Analysis Output */}
-          <div>
-            {currentAnalysis ? (
-              <div className="bg-white rounded-2xl shadow-sm border border-surface-200">
-                <AnalysisResult
-                  record={currentAnalysis}
-                  onSave={handleSave}
-                  onNewReflection={() => { setCurrentAnalysis(null); setIsSaved(false); }}
-                  isSaved={isSaved}
+            {/* Main Workspace */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 items-start">
+              {/* Left Column: Input */}
+              <div className="glass rounded-3xl shadow-xl shadow-primary-500/5 sticky top-24">
+                <ReflectionInput
+                  onSubmit={handleSubmit}
+                  isAnalyzing={isAnalyzing}
                 />
               </div>
-            ) : (
-              <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 bg-surface-100 rounded-2xl border-2 border-dashed border-surface-300">
-                <div className="w-16 h-16 bg-surface-200 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-surface-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-medium tracking-tight text-surface-900">Analiz Bekleniyor</h3>
-                <p className="text-sm text-surface-500 max-w-sm mt-2 font-light tracking-wide">
-                  Sol taraftaki panele bir ders yansıması girerek veya "Demo Verilerini Yükle" butonunu kullanarak yapay zekâ analizini başlatın.
-                </p>
+
+              {/* Right Column: Analysis Output */}
+              <div>
+                {currentAnalysis ? (
+                  <div className="glass rounded-3xl shadow-xl shadow-primary-500/5">
+                    <AnalysisResult
+                      record={currentAnalysis}
+                      onSave={handleSave}
+                      onNewReflection={() => { setCurrentAnalysis(null); setIsSaved(false); }}
+                      isSaved={isSaved}
+                    />
+                  </div>
+                ) : (
+                  <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 rounded-3xl border-2 border-dashed border-surface-200 bg-white/40 backdrop-blur-sm">
+                    <div className="w-20 h-20 bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl flex items-center justify-center mb-6 animate-float">
+                      <svg className="w-10 h-10 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold tracking-tight text-surface-900">Analiz Bekleniyor</h3>
+                    <p className="text-sm text-surface-500 max-w-sm mt-3 font-light leading-relaxed">
+                      Sol taraftaki panele bir ders yansimasi girerek yapay zeka analizini baslatin.
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
-
-        {/* Bottom Section: Memory Table */}
-        <div className="border-t border-surface-200 pt-12">
-          <Dashboard
-            records={records}
-            onViewRecord={handleViewRecord}
-            onDeleteRecord={handleDeleteRecord}
-          />
-        </div>
-
-      </main>
-      <footer className="border-t border-surface-200 bg-white mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-semibold text-surface-700">PedagoHafıza</span>
-              <span className="text-xs text-surface-400">v1.0 MVP</span>
             </div>
-            <p className="text-xs text-surface-500 text-center">
-              Yapay zekâ destekli pedagojik hafıza sistemi — Hackathon / Promptathon Demo
-            </p>
-            <div className="flex items-center gap-2 text-xs text-surface-400">
-              <span>KVKK Uyumlu</span>
-              <span>•</span>
-              <span>Anonim Veri</span>
+
+            {/* Dashboard */}
+            <div className="pt-12">
+              <Dashboard
+                records={records}
+                onViewRecord={handleViewRecord}
+                onDeleteRecord={handleDeleteRecord}
+              />
+            </div>
+          </main>
+        )}
+
+        {/* Footer */}
+        <footer className="glass border-t border-white/20 mt-12 relative z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+                  <span className="text-[10px] font-bold text-white">MH</span>
+                </div>
+                <span className="text-sm font-semibold text-surface-700">Maarif Hafiza</span>
+                <span className="text-xs text-surface-400 px-2 py-0.5 rounded-full bg-surface-100">v1.0 MVP</span>
+              </div>
+              <p className="text-xs text-surface-500 text-center">
+                Yapay zeka destekli anonim egitim hafizasi — Java Takimi
+              </p>
+              <div className="flex items-center gap-3 text-xs text-surface-400">
+                <span className="px-2 py-1 rounded-md bg-accent-50 text-accent-600 font-medium">KVKK Uyumlu</span>
+                <span className="px-2 py-1 rounded-md bg-primary-50 text-primary-600 font-medium">SKA 4</span>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 }
