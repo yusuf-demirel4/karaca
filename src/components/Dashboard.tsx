@@ -1,209 +1,124 @@
 import { useState } from "react";
-import { Database, Calendar, Trash2, Eye, Search as SearchIcon, TrendingUp } from "lucide-react";
+import { Database, Calendar, Trash2, Eye, Search } from "lucide-react";
 import type { ReflectionRecord } from "../types";
 
-interface DashboardProps {
+interface Props {
   records: ReflectionRecord[];
   onViewRecord: (record: ReflectionRecord) => void;
   onDeleteRecord: (id: string) => void;
 }
 
-export default function Dashboard({ records, onViewRecord, onDeleteRecord }: DashboardProps) {
+export default function Dashboard({ records, onViewRecord, onDeleteRecord }: Props) {
   const [query, setQuery] = useState("");
-
-  const displayedRecords = query.trim().length > 1
-    ? records.filter(r =>
-        r.subject.toLowerCase().includes(query.toLowerCase()) ||
-        r.topic.toLowerCase().includes(query.toLowerCase()))
+  const filtered = query.trim().length > 1
+    ? records.filter(r => r.subject.toLowerCase().includes(query.toLowerCase()) || r.topic.toLowerCase().includes(query.toLowerCase()))
     : records;
 
-  const subjectCounts: Record<string, number> = {};
-  const difficultyCounts: Record<string, number> = {};
-  const avgConfidence =
-    records.length > 0
-      ? Math.round((records.reduce((sum, r) => sum + r.confidenceScore, 0) / records.length) * 100)
-      : 0;
+  const subjects: Record<string, number> = {};
+  records.forEach(r => { subjects[r.subject] = (subjects[r.subject] || 0) + 1; });
+  const avg = records.length > 0 ? Math.round((records.reduce((s, r) => s + r.confidenceScore, 0) / records.length) * 100) : 0;
 
-  records.forEach((r) => {
-    subjectCounts[r.subject] = (subjectCounts[r.subject] || 0) + 1;
-    difficultyCounts[r.difficultyLevel] = (difficultyCounts[r.difficultyLevel] || 0) + 1;
-  });
-
-  if (records.length === 0) {
+  if (!records.length) {
     return (
-      <div className="w-full text-center py-16">
-        <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-float">
-          <Database className="w-8 h-8 text-primary-400" />
-        </div>
-        <h2 className="text-xl font-semibold text-surface-800">Hafizada Kayit Yok</h2>
-        <p className="text-sm text-surface-500 mt-2 font-light">Bir yansima girerek pedagojik hafizanizi olusturmaya baslayin.</p>
+      <div className="text-center py-16">
+        <Database className="w-10 h-10 text-apple-border mx-auto mb-3" />
+        <p className="text-lg font-semibold text-apple-text">Henuz kayit yok</p>
+        <p className="text-sm text-apple-text-tertiary mt-1">Bir yansima girerek baslayin.</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full">
-      <div className="mb-10 text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-surface-900 mb-2">Pedagojik Hafiza Paneli</h2>
-        <p className="text-surface-500 font-light text-sm">Tum analiz sonuclari ve istatistikler.</p>
+    <div>
+      <h2 className="text-2xl font-semibold text-apple-text text-center mb-2">Pedagojik Hafiza</h2>
+      <p className="text-sm text-apple-text-tertiary text-center mb-8">Tum analiz kayitlari ve istatistikler.</p>
+
+      {/* Stats */}
+      <div className="grid grid-cols-4 gap-3 mb-8">
+        <Stat label="Toplam" value={records.length} />
+        <Stat label="Ders" value={Object.keys(subjects).length} />
+        <Stat label="Ort. Guven" value={`%${avg}`} />
+        <Stat label="Anonim" value={records.filter(r => r.privacyStatus === "Safe" || r.privacyStatus === "Anonimleştirildi" || r.privacyStatus === "Kişisel Veri Yok").length} />
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Toplam Kayit" value={records.length} gradient="from-primary-500 to-primary-600" />
-        <StatCard label="Ders Sayisi" value={Object.keys(subjectCounts).length} gradient="from-accent-500 to-accent-600" />
-        <StatCard label="Ort. Guven" value={`%${avgConfidence}`} gradient="from-primary-600 to-primary-700" />
-        <StatCard label="Guvenli Kayit" value={records.filter((r) => r.privacyStatus === "Safe" || r.privacyStatus === "Anonimleştirildi" || r.privacyStatus === "Kişisel Veri Yok").length} gradient="from-accent-600 to-accent-700" />
-      </div>
-
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="glass rounded-2xl p-6 shadow-lg shadow-primary-500/5">
-          <h3 className="text-sm font-semibold text-surface-700 mb-4 flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-primary-500" />
-            Ders Dagilimi
-          </h3>
-          <div className="space-y-3">
-            {Object.entries(subjectCounts).sort(([, a], [, b]) => b - a).map(([subject, count]) => (
-              <div key={subject} className="flex items-center gap-3">
-                <span className="text-sm text-surface-600 font-light w-32 truncate">{subject}</span>
-                <div className="flex-1 h-2 bg-surface-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-primary-400 to-primary-600 transition-all duration-500"
-                    style={{ width: `${(count / records.length) * 100}%` }}
-                  />
-                </div>
-                <span className="text-sm font-semibold text-surface-900 w-6 text-right">{count}</span>
+      {/* Subject bars */}
+      <div className="bg-apple-bg-secondary rounded-2xl p-5 mb-8">
+        <p className="text-sm font-semibold text-apple-text mb-4">Ders Dagilimi</p>
+        <div className="space-y-2.5">
+          {Object.entries(subjects).sort(([,a],[,b]) => b - a).map(([subj, count]) => (
+            <div key={subj} className="flex items-center gap-3">
+              <span className="text-xs text-apple-text-secondary w-24 truncate">{subj}</span>
+              <div className="flex-1 h-1.5 bg-apple-border-light rounded-full">
+                <div className="h-full bg-apple-blue rounded-full" style={{ width: `${(count / records.length) * 100}%` }} />
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="glass rounded-2xl p-6 shadow-lg shadow-primary-500/5">
-          <h3 className="text-sm font-semibold text-surface-700 mb-4 flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-accent-500" />
-            Zorluk Dagilimi
-          </h3>
-          <div className="space-y-3">
-            {["Kolay", "Orta", "Zor", "Cok Zor"].map((level) => (
-              <div key={level} className="flex items-center gap-3">
-                <span className="text-sm text-surface-600 font-light w-16">{level}</span>
-                <div className="flex-1 h-2 bg-surface-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-accent-400 to-accent-600 transition-all duration-500"
-                    style={{ width: `${((difficultyCounts[level] || 0) / records.length) * 100}%` }}
-                  />
-                </div>
-                <span className="text-sm font-semibold text-surface-900 w-6 text-right">{difficultyCounts[level] || 0}</span>
-              </div>
-            ))}
-          </div>
+              <span className="text-xs font-medium text-apple-text w-4 text-right">{count}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Records Table */}
-      <div className="glass rounded-2xl shadow-lg shadow-primary-500/5 overflow-hidden">
-        <div className="px-6 py-5 border-b border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h3 className="text-sm font-semibold text-surface-700">
-            Kayit Listesi
-            <span className="ml-2 px-2 py-0.5 rounded-md bg-primary-50 text-primary-600 text-xs">{displayedRecords.length}</span>
-          </h3>
-          <div className="relative w-full sm:w-72">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-400" />
+      {/* Table */}
+      <div className="rounded-2xl border border-apple-border-light overflow-hidden">
+        <div className="px-5 py-4 bg-apple-bg-secondary flex items-center justify-between gap-4">
+          <p className="text-sm font-semibold text-apple-text">Kayitlar <span className="text-apple-text-tertiary font-normal">({filtered.length})</span></p>
+          <div className="relative w-60">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-apple-text-tertiary" />
             <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Ders veya konu ara..."
-              className="w-full pl-9 pr-3 py-2.5 bg-white/60 border border-surface-200 rounded-xl text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 placeholder:text-surface-400 font-light transition-all"
+              value={query} onChange={e => setQuery(e.target.value)}
+              placeholder="Ara..."
+              className="w-full pl-8 pr-3 py-2 text-sm bg-white border border-apple-border-light rounded-lg focus:outline-none focus:ring-2 focus:ring-apple-blue/20 focus:border-apple-blue placeholder:text-apple-text-tertiary"
             />
           </div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-surface-50/50">
-                <Th>Tarih</Th><Th>Ders</Th><Th>Konu</Th><Th>Zorluk</Th><Th>Guven</Th><Th>Gizlilik</Th><Th align="right">Islemler</Th>
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-apple-border-light text-left">
+              <Th>Tarih</Th><Th>Ders</Th><Th>Konu</Th><Th>Zorluk</Th><Th>Guven</Th><Th>Durum</Th><Th></Th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map(r => (
+              <tr key={r.id} className="border-b border-apple-border-light last:border-0 hover:bg-apple-bg-secondary/50 transition-colors">
+                <td className="px-5 py-3 text-xs text-apple-text-tertiary">
+                  <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" />{new Date(r.timestamp).toLocaleDateString("tr-TR")}</span>
+                </td>
+                <td className="px-5 py-3 text-sm font-medium text-apple-text">{r.subject}</td>
+                <td className="px-5 py-3 text-sm text-apple-text-secondary max-w-[180px] truncate">{r.topic}</td>
+                <td className="px-5 py-3"><DiffBadge level={r.difficultyLevel} /></td>
+                <td className="px-5 py-3 text-sm font-medium text-apple-text">%{Math.round(r.confidenceScore * 100)}</td>
+                <td className="px-5 py-3"><StatusBadge status={r.privacyStatus} /></td>
+                <td className="px-5 py-3 text-right">
+                  <button onClick={() => onViewRecord(r)} className="p-1.5 text-apple-text-tertiary hover:text-apple-blue rounded-lg transition-colors"><Eye className="w-4 h-4" /></button>
+                  <button onClick={() => onDeleteRecord(r.id)} className="p-1.5 text-apple-text-tertiary hover:text-red-500 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
+                </td>
               </tr>
-            </thead>
-            <tbody className="divide-y divide-surface-100/50">
-              {displayedRecords.map((record: ReflectionRecord) => (
-                <tr key={record.id} className="hover:bg-primary-50/20 transition-colors">
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-2 text-sm text-surface-600">
-                      <Calendar className="w-3.5 h-3.5 text-surface-400" />
-                      {new Date(record.timestamp).toLocaleDateString("tr-TR")}
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <span className="text-sm font-medium text-surface-900">{record.subject}</span>
-                  </td>
-                  <td className="px-5 py-3.5 text-sm font-light text-surface-500 max-w-[200px] truncate">{record.topic}</td>
-                  <td className="px-5 py-3.5">
-                    <DifficultyBadge level={record.difficultyLevel} />
-                  </td>
-                  <td className="px-5 py-3.5 text-sm font-semibold text-surface-900">%{Math.round(record.confidenceScore * 100)}</td>
-                  <td className="px-5 py-3.5">
-                    <PrivacyBadge status={record.privacyStatus} />
-                  </td>
-                  <td className="px-5 py-3.5 text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <button onClick={() => onViewRecord(record)} className="p-2 text-surface-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all" title="Detay">
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => onDeleteRecord(record.id)} className="p-2 text-surface-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Sil">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {displayedRecords.length === 0 && (
-                <tr>
-                  <td colSpan={7} className="px-5 py-8 text-center text-sm text-surface-500">
-                    Arama kriterlerine uygun kayit bulunamadi.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
 
-function StatCard({ label, value, gradient }: { label: string; value: string | number; gradient: string }) {
+function Stat({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="glass rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:scale-[1.02] transition-transform">
-      <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${gradient} rounded-full blur-2xl opacity-10 group-hover:opacity-20 transition-opacity`} />
-      <p className="text-[10px] font-semibold text-surface-400 tracking-widest uppercase mb-2">{label}</p>
-      <p className="text-3xl font-bold tracking-tight text-surface-900">{value}</p>
+    <div className="bg-apple-bg-secondary rounded-2xl p-5 text-center">
+      <p className="text-2xl font-semibold text-apple-text">{value}</p>
+      <p className="text-[11px] text-apple-text-tertiary mt-1 uppercase tracking-wider">{label}</p>
     </div>
   );
 }
 
-function Th({ children, align }: { children: React.ReactNode; align?: string }) {
-  return <th className={`${align === "right" ? "text-right" : "text-left"} px-5 py-3 text-[10px] font-semibold text-surface-400 uppercase tracking-widest`}>{children}</th>;
+function Th({ children }: { children?: React.ReactNode }) {
+  return <th className="px-5 py-2.5 text-[11px] font-medium text-apple-text-tertiary uppercase tracking-wider">{children}</th>;
 }
 
-function DifficultyBadge({ level }: { level: string }) {
-  const classes = level === "Çok Zor" ? "bg-red-50 text-red-600 border-red-200" :
-    level === "Zor" ? "bg-amber-50 text-amber-600 border-amber-200" :
-    level === "Orta" ? "bg-blue-50 text-blue-600 border-blue-200" :
-    "bg-green-50 text-green-600 border-green-200";
-  return <span className={`text-xs font-medium px-2 py-0.5 rounded-md border ${classes}`}>{level}</span>;
+function DiffBadge({ level }: { level: string }) {
+  const c = level === "Çok Zor" ? "bg-red-50 text-red-600" : level === "Zor" ? "bg-orange-50 text-orange-600" : level === "Orta" ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-600";
+  return <span className={`px-2 py-0.5 text-[11px] font-medium rounded-md ${c}`}>{level}</span>;
 }
 
-function PrivacyBadge({ status }: { status: string }) {
-  const isGreen = status === "Safe" || status === "Anonimleştirildi" || status === "Kişisel Veri Yok";
-  return (
-    <span className={`text-xs font-medium px-2 py-0.5 rounded-md border ${
-      isGreen ? "bg-accent-50 text-accent-600 border-accent-200" :
-      status === "Needs Review" ? "bg-amber-50 text-amber-600 border-amber-200" :
-      "bg-red-50 text-red-600 border-red-200"
-    }`}>
-      {isGreen ? "Anonim" : status}
-    </span>
-  );
+function StatusBadge({ status }: { status: string }) {
+  const ok = status === "Safe" || status === "Anonimleştirildi" || status === "Kişisel Veri Yok";
+  return <span className={`px-2 py-0.5 text-[11px] font-medium rounded-md ${ok ? "bg-green-50 text-green-600" : "bg-orange-50 text-orange-600"}`}>{ok ? "Anonim" : status}</span>;
 }

@@ -4,157 +4,33 @@
 
 @layer base {
   :root {
-    --color-primary-50: #eef7ff;
-    --color-primary-100: #d9edff;
-    --color-primary-200: #bce0ff;
-    --color-primary-300: #8eccff;
-    --color-primary-400: #59aeff;
-    --color-primary-500: #3b8bff;
-    --color-primary-600: #1d6af5;
-    --color-primary-700: #1555e1;
-    --color-primary-800: #1845b6;
-    --color-primary-900: #1a3d8f;
-
-    --color-accent-50: #f0fdf4;
-    --color-accent-100: #dcfce7;
-    --color-accent-200: #bbf7d0;
-    --color-accent-400: #4ade80;
-    --color-accent-500: #22c55e;
-    --color-accent-600: #16a34a;
-    --color-accent-700: #15803d;
-
-    --color-surface-50: #fafbfc;
-    --color-surface-100: #f4f6f8;
-    --color-surface-200: #e8ecf0;
-    --color-surface-300: #d1d9e0;
-    --color-surface-400: #94a3b8;
-    --color-surface-500: #64748b;
-    --color-surface-600: #475569;
-    --color-surface-700: #334155;
-    --color-surface-800: #1e293b;
-    --color-surface-900: #0f172a;
-    --color-surface-950: #020617;
-
-    --color-warning-500: #f59e0b;
-    --color-warning-100: #fef3c7;
-
-    --color-danger-500: #ef4444;
-    --color-danger-100: #fee2e2;
-
-    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Helvetica", "Arial", system-ui, sans-serif;
   }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-sans);
-  background-color: #fafbfc;
-  color: var(--color-surface-900);
+  background: #fff;
+  color: #1d1d1f;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Apple-style light beam animations */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* Subtle fade-in */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+.fade-up { animation: fade-up 0.8s ease-out both; }
+.fade-up-1 { animation-delay: 0.1s; }
+.fade-up-2 { animation-delay: 0.2s; }
+.fade-up-3 { animation-delay: 0.3s; }
+.fade-up-4 { animation-delay: 0.4s; }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-glow-pulse {
-  animation: glow-pulse 4s ease-in-out infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 8s ease infinite;
-}
-
-/* Glass morphism */
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.glass-dark {
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Light beam effect */
-.light-beam {
-  position: relative;
-  overflow: hidden;
-}
-
-.light-beam::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(ellipse at center, rgba(59, 139, 255, 0.08) 0%, transparent 70%);
-  animation: glow-pulse 4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-/* Orb background effects */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-surface-100);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-surface-300);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-surface-400);
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d2d2d7; border-radius: 4px; }

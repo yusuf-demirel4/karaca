@@ -1,248 +1,149 @@
-import {
-  BookOpen,
-  HelpCircle,
-  AlertTriangle,
-  MessageSquare,
-  Eye,
-  BarChart3,
-  Lightbulb,
-  Shield,
-  CheckCircle2,
-  Save,
-  ChevronDown,
-  ChevronUp,
-  Code
-} from "lucide-react";
+import { BookOpen, HelpCircle, AlertTriangle, MessageSquare, Eye, Lightbulb, Shield, CheckCircle2, Save, ChevronDown, ChevronUp } from "lucide-react";
 import type { ReflectionRecord } from "../types";
 import { useState } from "react";
+import AnonymizedTextView from "./AnonymizedTextView";
 
-interface AnalysisResultProps {
+interface Props {
   record: ReflectionRecord;
   onSave: () => void;
   onNewReflection: () => void;
   isSaved: boolean;
 }
 
-export default function AnalysisResult({ record, onSave, onNewReflection, isSaved }: AnalysisResultProps) {
-  const [showAnonymized, setShowAnonymized] = useState(false);
-  const [showJSON, setShowJSON] = useState(false);
-
-  const confidencePercent = Math.round(record.confidenceScore * 100);
+export default function AnalysisResult({ record, onSave, onNewReflection, isSaved }: Props) {
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const pct = Math.round(record.confidenceScore * 100);
 
   return (
-    <div className="w-full p-6">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h2 className="text-2xl font-bold text-surface-900 mb-1">Analiz Sonucu</h2>
-          <p className="text-xs text-surface-400 font-mono">ID: {record.id}</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={onNewReflection}
-            className="px-4 py-2 text-sm font-medium text-surface-600 bg-white border border-surface-200 rounded-xl hover:bg-surface-50 transition-all"
-          >
-            Yeni Yansima
+    <div className="p-6">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-semibold text-apple-text">Analiz Sonucu</h2>
+        <div className="flex gap-2">
+          <button onClick={onNewReflection} className="px-4 py-2 text-sm text-apple-text-secondary rounded-full border border-apple-border hover:bg-apple-bg-secondary transition-colors">
+            Yeni
           </button>
           <button
             onClick={onSave}
             disabled={isSaved}
-            className={`flex items-center gap-2 px-5 py-2 text-sm font-medium rounded-xl transition-all ${
-              isSaved
-                ? "bg-accent-50 text-accent-700 border border-accent-200 cursor-not-allowed"
-                : "bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg shadow-primary-500/20 hover:shadow-xl hover:scale-[1.02]"
+            className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+              isSaved ? "bg-green-50 text-green-600 border border-green-200" : "bg-apple-blue text-white hover:bg-apple-blue-hover"
             }`}
           >
-            {isSaved ? (
-              <>
-                <CheckCircle2 className="w-4 h-4" />
-                Kaydedildi
-              </>
-            ) : (
-              <>
-                <Save className="w-4 h-4" />
-                Hafizaya Kaydet
-              </>
-            )}
+            {isSaved ? <><CheckCircle2 className="w-3.5 h-3.5" /> Kaydedildi</> : <><Save className="w-3.5 h-3.5" /> Kaydet</>}
           </button>
         </div>
       </div>
 
-      {/* Top Stats */}
+      {/* Stats row */}
       <div className="grid grid-cols-3 gap-3 mb-6">
-        <div className="rounded-2xl border border-surface-100 bg-white/80 p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <BookOpen className="w-3.5 h-3.5 text-primary-500" />
-            <span className="text-[10px] font-semibold text-surface-400 uppercase tracking-widest">Ders</span>
+        <div className="bg-apple-bg-secondary rounded-xl p-4">
+          <div className="flex items-center gap-1.5 mb-2">
+            <BookOpen className="w-3.5 h-3.5 text-apple-blue" />
+            <span className="text-[11px] font-medium text-apple-text-tertiary uppercase tracking-wider">Ders</span>
           </div>
-          <p className="text-base font-semibold text-surface-900">{record.subject}</p>
-          <p className="text-xs text-surface-500 mt-0.5 font-light">{record.topic}</p>
+          <p className="text-sm font-semibold text-apple-text">{record.subject}</p>
+          <p className="text-xs text-apple-text-tertiary mt-0.5">{record.topic}</p>
         </div>
-
-        <div className="rounded-2xl border border-surface-100 bg-white/80 p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <BarChart3 className="w-3.5 h-3.5 text-primary-500" />
-            <span className="text-[10px] font-semibold text-surface-400 uppercase tracking-widest">Zorluk</span>
+        <div className="bg-apple-bg-secondary rounded-xl p-4">
+          <div className="flex items-center gap-1.5 mb-2">
+            <AlertTriangle className="w-3.5 h-3.5 text-apple-blue" />
+            <span className="text-[11px] font-medium text-apple-text-tertiary uppercase tracking-wider">Zorluk</span>
           </div>
-          <span className={`inline-flex px-3 py-1 rounded-lg text-xs font-medium ${
-            record.difficultyLevel === "Çok Zor" ? "bg-red-50 text-red-700 border border-red-200" :
-            record.difficultyLevel === "Zor" ? "bg-amber-50 text-amber-700 border border-amber-200" :
-            record.difficultyLevel === "Orta" ? "bg-blue-50 text-blue-700 border border-blue-200" :
-            "bg-green-50 text-green-700 border border-green-200"
-          }`}>
-            {record.difficultyLevel}
-          </span>
+          <DiffBadge level={record.difficultyLevel} />
         </div>
-
-        <div className="rounded-2xl border border-surface-100 bg-white/80 p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <CheckCircle2 className="w-3.5 h-3.5 text-primary-500" />
-            <span className="text-[10px] font-semibold text-surface-400 uppercase tracking-widest">Guven</span>
+        <div className="bg-apple-bg-secondary rounded-xl p-4">
+          <div className="flex items-center gap-1.5 mb-2">
+            <CheckCircle2 className="w-3.5 h-3.5 text-apple-blue" />
+            <span className="text-[11px] font-medium text-apple-text-tertiary uppercase tracking-wider">Guven</span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-surface-900">%{confidencePercent}</span>
-          </div>
-          <div className="mt-1.5 h-1.5 bg-surface-100 rounded-full overflow-hidden">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-primary-500 to-primary-600 transition-all duration-700"
-              style={{ width: `${confidencePercent}%` }}
-            />
-          </div>
+          <p className="text-lg font-semibold text-apple-text">%{pct}</p>
+          <div className="mt-1.5 h-1 bg-apple-border-light rounded-full"><div className="h-full bg-apple-blue rounded-full" style={{ width: `${pct}%` }} /></div>
         </div>
       </div>
 
-      {/* Question & Misconception */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div className="rounded-2xl border border-red-100 bg-red-50/30 p-5">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-red-500" />
-              <span className="text-[10px] font-semibold text-red-400 uppercase tracking-widest">Zor Soru</span>
-            </div>
-            <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-primary-50 text-primary-600 border border-primary-200">
-              {record.questionType}
-            </span>
-          </div>
-          <p className="text-sm text-surface-800 leading-relaxed font-light italic">
-            "{record.difficultQuestion}"
-          </p>
-        </div>
+      {/* Question */}
+      <Section icon={<HelpCircle className="w-4 h-4 text-red-500" />} title="Zor Soru" badge={record.questionType}>
+        <p className="text-sm text-apple-text italic leading-relaxed">"{record.difficultQuestion}"</p>
+      </Section>
 
-        <div className="rounded-2xl border border-amber-100 bg-amber-50/30 p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <AlertTriangle className="w-4 h-4 text-amber-500" />
-            <span className="text-[10px] font-semibold text-amber-400 uppercase tracking-widest">Yanilgi</span>
-          </div>
-          <p className="text-sm text-surface-800 leading-relaxed font-light">
-            {record.misconception}
-          </p>
-        </div>
-      </div>
+      {/* Misconception */}
+      <Section icon={<AlertTriangle className="w-4 h-4 text-amber-500" />} title="Kavram Yanilgisi">
+        <p className="text-sm text-apple-text-secondary leading-relaxed">{record.misconception}</p>
+      </Section>
 
-      {/* Teacher Response & Observation */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div className="rounded-2xl border border-surface-100 bg-white/80 p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <MessageSquare className="w-4 h-4 text-primary-500" />
-            <span className="text-[10px] font-semibold text-surface-400 uppercase tracking-widest">Ogretmen Yaniti</span>
-          </div>
-          <p className="text-sm text-surface-700 leading-relaxed font-light">{record.teacherResponse}</p>
-        </div>
-
-        <div className="rounded-2xl border border-surface-100 bg-white/80 p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <Eye className="w-4 h-4 text-primary-500" />
-            <span className="text-[10px] font-semibold text-surface-400 uppercase tracking-widest">Gozlem</span>
-          </div>
-          <p className="text-sm text-surface-700 leading-relaxed font-light">{record.teacherObservation}</p>
-        </div>
+      {/* Teacher response + observation */}
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <Section icon={<MessageSquare className="w-4 h-4 text-apple-blue" />} title="Ogretmen Yaniti" compact>
+          <p className="text-sm text-apple-text-secondary leading-relaxed">{record.teacherResponse}</p>
+        </Section>
+        <Section icon={<Eye className="w-4 h-4 text-apple-blue" />} title="Gozlem" compact>
+          <p className="text-sm text-apple-text-secondary leading-relaxed">{record.teacherObservation}</p>
+        </Section>
       </div>
 
       {/* Recommendation */}
-      <div className="rounded-2xl border border-primary-100 bg-gradient-to-br from-primary-50/50 to-accent-50/30 p-5 mb-4">
-        <div className="flex items-center gap-2 mb-3">
-          <Lightbulb className="w-4 h-4 text-primary-600" />
-          <span className="text-[10px] font-semibold text-primary-400 uppercase tracking-widest">Onerilen Yontem</span>
-        </div>
-        <p className="text-sm text-surface-800 leading-relaxed font-light">{record.recommendedMethod}</p>
-      </div>
+      <Section icon={<Lightbulb className="w-4 h-4 text-apple-blue" />} title="Sonraki Ders Icin Oneri" highlight>
+        <p className="text-sm text-apple-text leading-relaxed">{record.recommendedMethod}</p>
+      </Section>
 
       {/* Privacy */}
-      <div className="rounded-2xl border border-surface-100 bg-white/80 p-5 mb-4">
-        <div className="flex items-center justify-between mb-3">
+      <div className="rounded-xl border border-apple-border-light p-4">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-accent-600" />
-            <span className="text-[10px] font-semibold text-surface-400 uppercase tracking-widest">
-              KVKK Anonimleştirme
-            </span>
+            <Shield className="w-4 h-4 text-green-600" />
+            <span className="text-sm font-medium text-apple-text">KVKK Anonimleştirme</span>
           </div>
-          <span
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border ${
-              record.privacyStatus === "Safe" || record.privacyStatus === "Anonimleştirildi"
-                ? "bg-accent-50 text-accent-700 border-accent-200"
-                : record.privacyStatus === "Needs Review"
-                ? "bg-amber-50 text-amber-700 border-amber-200"
-                : record.privacyStatus === "High Risk"
-                ? "bg-red-50 text-red-700 border-red-200"
-                : "bg-blue-50 text-blue-700 border-blue-200"
-            }`}
-          >
-            <Shield className="w-3 h-3" />
-            {record.privacyStatus}
-          </span>
+          <PrivBadge status={record.privacyStatus} />
         </div>
 
-        {record.privacyExplanation && (
-          <p className="text-sm text-surface-600 mb-3 font-light">{record.privacyExplanation}</p>
-        )}
-
         {record.detectedSensitiveData && record.detectedSensitiveData.length > 0 && (
-          <div className="mb-3">
-            <p className="text-[10px] font-semibold text-surface-400 uppercase tracking-widest mb-2">Tespit Edilen Hassas Veriler:</p>
-            <div className="flex flex-wrap gap-1.5">
-              {record.detectedSensitiveData.map((data, idx) => (
-                <span key={idx} className="inline-flex px-2 py-0.5 bg-red-50 border border-red-200 text-red-600 text-xs rounded-md font-mono">
-                  {data}
-                </span>
-              ))}
-            </div>
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {record.detectedSensitiveData.map((d, i) => (
+              <span key={i} className="px-2 py-0.5 bg-red-50 text-red-600 text-xs rounded-md border border-red-200 font-mono">{d}</span>
+            ))}
           </div>
         )}
 
-        <button
-          onClick={() => setShowAnonymized(!showAnonymized)}
-          className="flex items-center gap-2 text-sm text-primary-600 hover:text-primary-700 font-medium"
-        >
-          {showAnonymized ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-          {showAnonymized ? "Gizle" : "Anonimlestirilmis metni goster"}
+        <button onClick={() => setShowPrivacy(!showPrivacy)} className="flex items-center gap-1 mt-3 text-xs text-apple-link font-medium">
+          {showPrivacy ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+          {showPrivacy ? "Gizle" : "Anonimlestirilmis metni goster"}
         </button>
 
-        {showAnonymized && (
-          <div className="mt-3 p-4 bg-surface-50 border border-surface-200 rounded-xl">
-            <p className="text-sm text-surface-700 leading-relaxed whitespace-pre-wrap font-mono text-xs">
-              {record.anonymizedText}
-            </p>
-          </div>
-        )}
-      </div>
-
-      {/* JSON Debug */}
-      <div className="rounded-xl border border-surface-200 bg-surface-50 p-4">
-        <button
-          onClick={() => setShowJSON(!showJSON)}
-          className="flex items-center gap-2 text-sm text-surface-500 hover:text-surface-700 font-medium transition-colors"
-        >
-          <Code className="w-4 h-4" />
-          {showJSON ? "JSON Gizle" : "Gelistirici Gorunumu (JSON)"}
-        </button>
-
-        {showJSON && (
-          <div className="mt-3 p-4 bg-surface-900 rounded-xl overflow-x-auto">
-            <pre className="text-xs text-green-400 font-mono">
-              {JSON.stringify(record, null, 2)}
-            </pre>
+        {showPrivacy && (
+          <div className="mt-3">
+            <AnonymizedTextView originalText={record.originalText} anonymizedText={record.anonymizedText} detectedData={record.detectedSensitiveData || []} />
           </div>
         )}
       </div>
     </div>
   );
+}
+
+function Section({ icon, title, badge, children, highlight, compact }: { icon: React.ReactNode; title: string; badge?: string; children: React.ReactNode; highlight?: boolean; compact?: boolean }) {
+  return (
+    <div className={`rounded-xl p-4 ${compact ? '' : 'mb-4'} ${highlight ? 'bg-blue-50 border border-blue-100' : 'bg-apple-bg-secondary'}`}>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-1.5">
+          {icon}
+          <span className="text-[11px] font-medium text-apple-text-tertiary uppercase tracking-wider">{title}</span>
+        </div>
+        {badge && <span className="px-2 py-0.5 text-[10px] font-medium bg-purple-50 text-purple-600 rounded-md border border-purple-200">{badge}</span>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function DiffBadge({ level }: { level: string }) {
+  const c = level === "Çok Zor" ? "bg-red-50 text-red-600 border-red-200" :
+    level === "Zor" ? "bg-orange-50 text-orange-600 border-orange-200" :
+    level === "Orta" ? "bg-blue-50 text-blue-600 border-blue-200" :
+    "bg-green-50 text-green-600 border-green-200";
+  return <span className={`inline-block px-2.5 py-1 text-xs font-medium rounded-md border ${c}`}>{level}</span>;
+}
+
+function PrivBadge({ status }: { status: string }) {
+  const ok = status === "Safe" || status === "Anonimleştirildi" || status === "Kişisel Veri Yok";
+  return <span className={`px-2.5 py-1 text-xs font-medium rounded-md border ${ok ? "bg-green-50 text-green-600 border-green-200" : "bg-orange-50 text-orange-600 border-orange-200"}`}>{ok ? "Guvende" : status}</span>;
 }
