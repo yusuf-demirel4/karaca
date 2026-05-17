@@ -27,7 +27,7 @@ export default function ReflectionInput({ onSubmit, isAnalyzing }: Props) {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <h2 className="text-2xl font-semibold text-apple-text mb-1">Ders Yansıması</h2>
       <p className="text-sm text-apple-text-tertiary mb-5">Ders sonrası gözlemlerinizi yazın.</p>
 
@@ -51,7 +51,7 @@ export default function ReflectionInput({ onSubmit, isAnalyzing }: Props) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Bugün derste ne oldu? Öğrenciler hangi sorularla zorlandı?"
-        className="w-full h-32 p-4 mb-2 rounded-xl bg-apple-bg-secondary border border-apple-border-light text-sm text-apple-text leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-apple-blue/30 focus:border-apple-blue placeholder:text-apple-text-tertiary transition-all"
+        className="w-full h-28 sm:h-32 p-4 mb-2 rounded-xl bg-apple-bg-secondary border border-apple-border-light text-sm text-apple-text leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-apple-blue/30 focus:border-apple-blue placeholder:text-apple-text-tertiary transition-all"
         disabled={isAnalyzing}
       />
 

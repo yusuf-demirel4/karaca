@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
+import { Routes, Route } from "react-router-dom";
 import type { ReflectionRecord } from "./types";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
@@ -6,6 +7,7 @@ import ReflectionInput from "./components/ReflectionInput";
 import AnalysisResult from "./components/AnalysisResult";
 import AnalysisProgress from "./components/AnalysisProgress";
 import Dashboard from "./components/Dashboard";
+import KvkkPage from "./pages/KvkkPage";
 
 export default function App() {
   const [records, setRecords] = useState<ReflectionRecord[]>([]);
@@ -87,56 +89,66 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white">
       <Header recordCount={records.length} />
-      <HeroSection onStartDemo={scrollToWorkspace} recordCount={records.length} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <HeroSection onStartDemo={scrollToWorkspace} recordCount={records.length} />
 
-      {/* Workspace — always visible */}
-      <section ref={workspaceRef} className="bg-white py-16">
-        <div className="max-w-[980px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-            {/* Input */}
-            <div className="rounded-2xl border border-apple-border-light bg-white shadow-sm sticky top-16">
-              <ReflectionInput onSubmit={handleSubmit} isAnalyzing={isAnalyzing} />
-            </div>
+              {/* Workspace — always visible */}
+              <section ref={workspaceRef} className="bg-white py-8 sm:py-16">
+                <div className="max-w-[980px] mx-auto px-4 sm:px-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                    {/* Input */}
+                    <div className="rounded-2xl border border-apple-border-light bg-white shadow-sm lg:sticky lg:top-16">
+                      <ReflectionInput onSubmit={handleSubmit} isAnalyzing={isAnalyzing} />
+                    </div>
 
-            {/* Output */}
-            <div>
-              {isAnalyzing ? (
-                <AnalysisProgress step={analysisStep} />
-              ) : currentAnalysis ? (
-                <div className="rounded-2xl border border-apple-border-light bg-white shadow-sm">
-                  <AnalysisResult
-                    record={currentAnalysis}
-                    onSave={handleSave}
-                    onNewReflection={() => { setCurrentAnalysis(null); setIsSaved(false); }}
-                    isSaved={isSaved}
-                  />
-                </div>
-              ) : (
-                <div className="rounded-2xl border border-apple-border-light bg-apple-bg-secondary min-h-[300px] flex flex-col items-center justify-center text-center p-8">
-                  <div className="w-14 h-14 rounded-2xl bg-apple-blue/10 flex items-center justify-center mb-4">
-                    <svg className="w-7 h-7 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
+                    {/* Output */}
+                    <div>
+                      {isAnalyzing ? (
+                        <AnalysisProgress step={analysisStep} />
+                      ) : currentAnalysis ? (
+                        <div className="rounded-2xl border border-apple-border-light bg-white shadow-sm">
+                          <AnalysisResult
+                            record={currentAnalysis}
+                            onSave={handleSave}
+                            onNewReflection={() => { setCurrentAnalysis(null); setIsSaved(false); }}
+                            isSaved={isSaved}
+                          />
+                        </div>
+                      ) : (
+                        <div className="rounded-2xl border border-apple-border-light bg-apple-bg-secondary min-h-[300px] flex flex-col items-center justify-center text-center p-8">
+                          <div className="w-14 h-14 rounded-2xl bg-apple-blue/10 flex items-center justify-center mb-4">
+                            <svg className="w-7 h-7 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                          </div>
+                          <p className="text-lg font-semibold text-apple-text mb-1">Analiz Bekleniyor</p>
+                          <p className="text-sm text-apple-text-tertiary max-w-xs">Yukarıdan bir yansıma girin veya örnek seçin.</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <p className="text-lg font-semibold text-apple-text mb-1">Analiz Bekleniyor</p>
-                  <p className="text-sm text-apple-text-tertiary max-w-xs">Sol panelden bir yansıma girin veya örnek seçin.</p>
                 </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
+              </section>
 
-      {/* Dashboard */}
-      <section className="bg-apple-bg py-16 border-t border-apple-border-light">
-        <div className="max-w-[980px] mx-auto px-6">
-          <Dashboard records={records} onViewRecord={handleViewRecord} onDeleteRecord={handleDeleteRecord} />
-        </div>
-      </section>
+              {/* Dashboard */}
+              <section className="bg-apple-bg py-8 sm:py-16 border-t border-apple-border-light">
+                <div className="max-w-[980px] mx-auto px-4 sm:px-6">
+                  <Dashboard records={records} onViewRecord={handleViewRecord} onDeleteRecord={handleDeleteRecord} />
+                </div>
+              </section>
+            </>
+          }
+        />
+        <Route path="/kvkk" element={<KvkkPage />} />
+      </Routes>
 
       {/* Footer */}
-      <footer className="border-t border-apple-border-light py-6">
-        <div className="max-w-[980px] mx-auto px-6 flex items-center justify-between text-xs text-apple-text-tertiary">
+      <footer className="border-t border-apple-border-light py-4 sm:py-6">
+        <div className="max-w-[980px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-apple-text-tertiary">
           <span>Maarif Hafıza v1.0 — Java Takımı</span>
           <div className="flex gap-3">
             <span>KVKK Uyumlu</span>

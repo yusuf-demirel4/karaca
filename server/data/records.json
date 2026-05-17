@@ -1,5 +1,43 @@
 [
   {
+    "subject": "Fizik",
+    "topic": "Mutlak Sıfır, Zaman ve Sıcaklık-Enerji İlişkisi",
+    "difficultQuestion": "Mutlak sıfırda zaman durur mu?",
+    "questionType": "Kavramsal/Felsefi",
+    "misconception": "Sıcaklık ve enerji farkının karıştırılması; mutlak sıfırda her şeyin donmasıyla zamanın da duracağı yanılgısı.",
+    "teacherResponse": "Sıcaklığın parçacık hareketi olduğunu, zamanın farklı bir fiziksel büyüklük olduğunu açıkladım.",
+    "teacherObservation": "Öğrencilerin çoğunun mutlak sıfırda zamanın da duracağı yanılgısını sürdürdüğü gözlemlendi.",
+    "difficultyLevel": "Zor",
+    "recommendedTeachingMethod": "Kavramsal zorlukları gidermek için interaktif tartışmalar, düşünce deneyleri ve görsel materyaller kullanılması.",
+    "privacyStatus": "Safe",
+    "anonymizedText": "Fizik dersinde mutlak sıfırda zamanın durup durmayacağı sorusu gündeme geldi. Öğrencilerin sıcaklık ve enerji farkını karıştırdığı, mutlak sıfırda her şeyin donmasıyla zamanın da duracağı yönünde yaygın bir yanılgı olduğu gözlemlendi. Öğretmen sıcaklığın parçacık hareketi olduğunu, zamanın farklı bir fiziksel büyüklük olduğunu açıkladı.",
+    "detectedSensitiveData": [],
+    "confidenceScore": 0.95,
+    "id": "mp9u57y1z692ogq7iq9",
+    "timestamp": "2026-05-17T13:53:16.153Z",
+    "originalText": "Bugün fizik dersinde bir öğrenci \"Mutlak sıfırda zaman durur mu?\" diye sordu. Bazı öğrenciler sıcaklık ve enerji farkını karıştırdı. Sıcaklığın parçacık hareketi olduğunu, zamanın farklı bir fiziksel büyüklük olduğunu anlattım. Ancak sınıfın çoğu hala \"her şey donarsa zaman da donar\" diye düşünüyor."
+  },
+  {
+    "subject": "Matematik",
+    "topic": "Limit kavramına giriş",
+    "difficultQuestion": "Sıfıra bölündüğünde neden tanımsız olduğu ve sonsuzluk kavramının anlaşılması",
+    "questionType": "Kavramsal sorgulama",
+    "misconception": "Sıfıra bölmenin her zaman sonsuz bir sayı olduğu ve sonsuzluk ile tanımsızlık arasındaki farkın karıştırılması.",
+    "teacherResponse": "Sonsuzun bir sayı değil, bir yönelim olduğunu grafikler çizerek ve görselleştirerek açıkladım.",
+    "teacherObservation": "Bir öğrencinin sıfıra bölme ve sonsuzluk kavramları arasındaki ilişkiyi anlamakta zorlandığı ve bu konuda ısrarlı sorular sorduğu gözlemlendi.",
+    "difficultyLevel": "Zor",
+    "recommendedTeachingMethod": "Görselleştirme (grafikler), kavramsal açıklama ve örneklerle pekiştirme.",
+    "privacyStatus": "Safe",
+    "anonymizedText": "Matematik dersinde limit kavramına giriş yaptık. Bir öğrenci ısrarla sıfıra böldüğümüzde neden tanımsız diyoruz, sonsuz olması gerekmez mi diye sordu. Sonsuzun bir sayı değil yönelim olduğunu grafikler çizerek gösterdim.",
+    "detectedSensitiveData": [
+      "Ayşe"
+    ],
+    "confidenceScore": 1,
+    "id": "mp9u4ejqbso1nzci1di",
+    "timestamp": "2026-05-17T13:52:38.054Z",
+    "originalText": "Matematik dersinde limit kavramına giriş yaptık. Ayşe ısrarla sıfıra böldüğümüzde neden tanımsız diyoruz, sonsuz olması gerekmez mi diye sordu. Sonsuzun bir sayı değil yönelim olduğunu grafikler çizerek gösterdim."
+  },
+  {
     "id": "PH-1779024435259-yiv7",
     "timestamp": "2026-05-17T13:27:15.259Z",
     "originalText": "Tarih dersinde Kurtulus Savasi'nin orgutlenme donemini islerken Ali, Mustafa Kemal padisahin emrine karsi geldiginde isyan etmis olmuyor mu dedi. Tarihsel olaylari o gunun kosullariyla degerlendirmemiz gerektigini kaynaklar okutarak anlattim.",

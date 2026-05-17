@@ -9,7 +9,7 @@ const steps = [
 
 export default function AnalysisProgress({ step }: { step: number }) {
   return (
-    <div className="rounded-2xl bg-apple-bg-secondary border border-apple-border-light p-8 min-h-[300px] flex flex-col items-center justify-center">
+    <div className="rounded-2xl bg-apple-bg-secondary border border-apple-border-light p-6 sm:p-8 min-h-[300px] flex flex-col items-center justify-center">
       <div className="w-12 h-12 rounded-full bg-apple-blue/10 flex items-center justify-center mb-6">
         <div className="w-5 h-5 border-2 border-apple-blue border-t-transparent rounded-full animate-spin" />
       </div>

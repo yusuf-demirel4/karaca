@@ -15,7 +15,7 @@ export default function AnalysisResult({ record, onSave, onNewReflection, isSave
   const pct = Math.round(record.confidenceScore * 100);
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
         <h2 className="text-xl sm:text-2xl font-semibold text-apple-text">Analiz Sonucu</h2>

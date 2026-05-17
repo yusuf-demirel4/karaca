@@ -70,7 +70,29 @@ export default function Dashboard({ records, onViewRecord, onDeleteRecord }: Pro
             />
           </div>
         </div>
-        <div className="overflow-x-auto">
+        <div className="sm:hidden p-4 space-y-3">
+          {filtered.map(r => (
+            <div key={r.id} className="rounded-xl border border-apple-border-light bg-white p-4">
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <p className="text-sm font-semibold text-apple-text truncate">{r.subject}</p>
+                <span className="text-xs text-apple-text-tertiary">{new Date(r.timestamp).toLocaleDateString("tr-TR")}</span>
+              </div>
+              <p className="text-xs text-apple-text-secondary mb-3 line-clamp-2">{r.topic}</p>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <DiffBadge level={r.difficultyLevel} />
+                  <StatusBadge status={r.privacyStatus} />
+                  <span className="px-2 py-0.5 text-[11px] font-medium rounded-md bg-apple-bg-secondary text-apple-text border border-apple-border-light">%{Math.round(r.confidenceScore * 100)} Güven</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <button onClick={() => onViewRecord(r)} className="p-1.5 text-apple-text-tertiary hover:text-apple-blue rounded-lg transition-colors"><Eye className="w-4 h-4" /></button>
+                  <button onClick={() => onDeleteRecord(r.id)} className="p-1.5 text-apple-text-tertiary hover:text-red-500 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="hidden sm:block overflow-x-auto">
         <table className="w-full min-w-[640px]">
           <thead>
             <tr className="border-b border-apple-border-light text-left">
